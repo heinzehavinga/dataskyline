@@ -1,0 +1,61 @@
+html,body{
+    padding:0;
+    margin:0;
+    height:99%;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: 700;
+    color:#383838;
+    background: #ffffff;
+}
+
+#svg {
+    height:99%;
+    width:100%;
+    padding: 0;
+    margin:0;
+    
+}
+
+#svgbackup{
+    display: none;
+}
+
+.label{
+    color:#383838;
+}
+
+.iconStroke{
+    fill:#383838;
+}
+
+.iconFill{
+    fill:#06bdea;
+}
+
+.dataline { 
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+.grid .tick {
+    stroke: lightgrey;
+    stroke-opacity: 0.7;
+    shape-rendering: crispEdges;
+}
+.grid path {
+          stroke-width: 0;
+}
+
+.area {
+    fill: lightsteelblue;
+      stroke-width: 0;
+}
