@@ -5,7 +5,7 @@ var VisObject = function(svg, url) {
     this.canvas = svg;
     this.canvasWidth = this.canvas.node().getBoundingClientRect().width;
     this.canvasHeight = this.canvas.node().getBoundingClientRect().height;
-    this.aniDuration = 1000;
+    this.aniDuration = 3000;
     
     //XHR object
     this.url = url;

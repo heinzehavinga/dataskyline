@@ -3,7 +3,56 @@ function WeatherVis(svg, woied) {
   // Call the parent constructor, making sure (using Function#call)
   // that "this" is set correctly during the call
   VisObject.call(this, svg, woied);
-  this.unit = 'c';    
+  this.unit = 'c';
+    this.icons = {
+      "tropical storm": "x",
+      "hurricane": "x",
+      "severe thunderstorms": "heavythunder",
+      "thunderstorms": "thunder",
+      "mixed rain and snow": "mixrainsnow",
+      "mixed rain and sleet": "mixrainsnow",
+      "mixed snow and sleet": "mixrainsnow",
+      "freezing drizzle": "snow",
+      "drizzle": "shower",
+      "freezing rain": "mixrainsnow",
+      "showers": "shower",
+      "showers": "shower",
+      "snow flurries": "snow",
+      "light snow showers": "snow",
+      "blowing snow": "snow",
+      "snow": "snow",
+      "hail": "snow",
+      "sleet": "snow",
+      "dust": "snow",
+      "foggy": "cloudfog",
+      "haze": "cloudfog",
+      "smoky": "cloudfog",
+      "blustery": "cloudfog",
+      "windy": "arrow",
+      "cold": "cold",
+      "cloudy": "cold",
+      "mostly cloudy (night)": "twincloud",
+      "mostly cloudy (day)": "twincloud",
+      "partly cloudy (night)": "darkcloud",
+      "partly cloudy (day)": "cloud",
+      "clear (night)": "moon",
+      "sunny": "sun",
+      "fair (night)": "moon",
+      "fair (day)": "sun",
+      "mixed rain and hail": "mixrainsnow",
+      "hot": "sun",
+      "isolated thunderstorms": "thunder",
+      "scattered thunderstorms": "thunder",
+      "scattered thunderstorms": "heavythunder",
+      "scattered showers": "shower",
+      "heavy snow": "snow",
+      "scattered snow showers": "snow",
+      "heavy snow": "snow",
+      "partly cloudy": "suncloud",
+      "thundershowers": "thunderrain",
+      "snow showers": "snow",
+      "isolated thundershowers": "thunderrain"
+  };
 }
 
 // Create a WeatherVis.prototype object that inherits from VisObject.prototype.
