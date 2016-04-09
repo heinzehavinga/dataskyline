@@ -8,6 +8,26 @@ html,body{
     background: #ffffff;
 }
 
+#iframeOverlay{
+    z-index:1;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    position: absolute;
+    top:0;
+    left:0;
+}
+#mapiframe{
+    position: absolute;
+    top:0;
+    left:0;
+}
+
+#map-canvas{
+    width: 100%;
+    height: 100%;
+}
+
 #svg {
     height:99%;
     width:100%;
@@ -22,6 +42,11 @@ html,body{
 
 .label{
     color:#383838;
+}
+
+.whitelabel{
+    color:#ffffff;
+    fill:#ffffff;
 }
 
 .iconStroke{

@@ -20,50 +20,53 @@ TempatureVis.prototype.constructor = TempatureVis;
 
 // Replace the "sayHello" method
 TempatureVis.prototype.drawGraph = function(){
-        console.log("drawGraph",  this.data);
+        
     
-        var iconFile = this.icons[this.data.text.toLocaleLowerCase()]
+        var iconFile = this.icons[this.data.text.toLocaleLowerCase()];
+        if(iconFile == undefined){
+            iconFile = this.icons["partly cloudy (day)"];
+        }
                         
         var vis = this;
     
       d3.xml("../icons/"+ iconFile +".svg", "image/svg+xml", function(error, xml) {
             if (error) throw error;
 
-
+            
     //importing an icon from a svg file
     //If anybody knows a better way to import a simple icon, please let me know, this one is killing me.
             $("#svgbackup").append(xml.documentElement);
-            d3.select("#svgbackup").select("g").attr("class","weatherIcon");
+            d3.select("#svgbackup").select("g").attr("class","weatherIcon").attr("opacity",0);
             $("#svgbackup g").appendTo("#svg");
 
             var rect = d3.select(".weatherIcon").node().getBBox();
             var widthPerc = rect.width/(vis.canvasWidth/2);
             var heightPerc = rect.height/vis.canvasHeight;
 
-            var newScale = (0.9/widthPerc);
+            var newScale = (15*widthPerc);
 
-            d3.selectAll(".weatherIcon").attr("transform","scale("+newScale+")");
-            console.log(rect.width,vis.canvasWidth);
-            var xOffset = 10;
-
-            var yOffset = (vis.canvasHeight/10);
-            d3.selectAll(".weatherIcon").attr("transform","translate("+xOffset+","+yOffset+")scale("+(0.8/widthPerc)+")");
-          
+            d3.selectAll(".weatherIcon").attr("transform","scale("+newScale+")")
+            .style("fill","#5c5aa8");
             
+            var xOffset = 20;
+            var yOffset = newScale;
+            d3.selectAll(".weatherIcon").attr("transform","translate("+xOffset+","+yOffset+")scale("+newScale+")")
+            .transition()
+            .duration(vis.aniDuration)
+            .attr("opacity",1.0);
           
-
             var end_val =[parseInt(vis.data.temp)];
                 vis.canvas
                 .selectAll(".label")
                 .data(end_val)
                 .enter()
                 .append("text")
-                .style("fill","#383838")
+                .style("fill","#5c5aa8")
                 .style("font-size",vis.canvasHeight/3)
                 .attr("class", "label")
                 .attr("text-anchor","end")
-                .attr("x",vis.canvasWidth*0.73)
-                .attr("y",vis.canvasHeight*0.60)
+                .attr("x",vis.canvasWidth*0.5)
+                .attr("y",vis.canvasHeight*0.90)
                 .text(0)
                 .transition()
                 .duration(vis.aniDuration)
@@ -83,8 +86,9 @@ TempatureVis.prototype.drawGraph = function(){
           
                 vis.canvas
                 .append("text")
-                .attr("x",vis.canvasWidth*0.75)
-                .attr("y",vis.canvasHeight*0.60)
+                .style("fill","#5c5aa8")
+                .attr("x",vis.canvasWidth*0.5)
+                .attr("y",vis.canvasHeight*0.90)
                  .style("font-size",vis.canvasHeight/3)
                 .text("°C");
 

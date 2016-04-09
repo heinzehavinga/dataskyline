@@ -19,7 +19,7 @@ CircleVis.prototype.constructor = CircleVis;
 
 // Replace the "sayHello" method
 CircleVis.prototype.drawGraph = function(){
-  console.log("drawGraph new!");
+  
     //Draw + Update 
     
     var rSize;
@@ -90,7 +90,7 @@ CircleVis.prototype.drawGraph = function(){
 
 // Add a "sayGoodBye" method
 CircleVis.prototype.sayGoodBye = function(){
-  console.log("Goodbye!");
+
 };
 
 //// Example usage:
@@ -100,8 +100,5 @@ CircleVis.prototype.sayGoodBye = function(){
 //CircleVis1.sayGoodBye(); // "Goodbye!"
 //
 //// Check that instanceof works correctly
-//console.log(CircleVis1 instanceof VisObject);  // true 
-//console.log(CircleVis1 instanceof CircleVis); // true
-//          
 
 

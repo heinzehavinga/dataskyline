@@ -19,25 +19,66 @@ WindVis.prototype.constructor = WindVis;
 
 WindVis.prototype.calcWind = function(wind){
     
-    return 20;
-//    switch(wind) {
-//    case n:
-//        code block
-//        break;
-//    case n:
-//        code block
-//        break;
-//    default:
-//        return 0;
-//    }
-//            
+    
+    switch(wind.toLowerCase()) {
+    case "n":
+        return -90;
+        break;
+    case "nne":
+        return -67.5;
+        break;
+    case "ne":
+        return -45;
+        break;
+    case "ene":
+        return -22.5;
+        break;
+    case "e":
+        return 0;
+        break;
+    case "ese":
+        return 22.5;
+        break;
+    case "se":
+        return 45;
+        break;
+    case "sse":
+        return 67.5;
+        break;
+    case "s":
+        return 90;
+        break;
+    case "ssw":
+        return 112.5;
+        break;
+    case "sw":
+        return 135;
+        break;
+    case "wsw":
+        return 157.5;
+        break;
+    case "w":
+        return 180;
+        break;
+    case "wnw":
+        return 202.5;
+        break;
+    case "nw":
+        return 225;
+        break;
+    case "nnw":
+        return 247.5;
+        break;
+    default:
+        return 0;
+    }
+            
 }
     
 
     // Replace the "sayHello" method
 WindVis.prototype.drawGraph = function(){
-        console.log("drawGraph",  this.data);
-    
+            
         var iconFile = this.icons[this.data.text.toLocaleLowerCase()]
                         
         var vis = this;
@@ -55,27 +96,28 @@ WindVis.prototype.drawGraph = function(){
             var rect = d3.select(".weatherIcon").node().getBBox();
             var widthPerc = rect.width/(vis.canvasWidth/4);
             var heightPerc = rect.height/vis.canvasHeight;
-
-            var newScale = (0.9/widthPerc);
+            var newScale = (11*widthPerc);
 
             d3.selectAll(".weatherIcon").attr("transform","scale("+newScale+")");
-            console.log(rect.width,vis.canvasWidth);
-            var xOffset = 10;
 
-            var yOffset = 10;
+            var xOffset = -20;
+            var yOffset = -50;
             
-            d3.selectAll(".weatherIcon")
-//                .attr("x",xOffset)
-//                .attr("y",yOffset)
-//                .attr("transform","translate("+xOffset+","+yOffset+")scale("+(0.8/widthPerc)+")")
-            
-            .attr("transform","scale(1)")
-            .transition()
-            .duration(vis.aniDuration)
-            .ease("elastic")
-//            .attr("transform","rotate("+vis.calcWind(vis.data.wind.direction)+","+(rect.width)+","+(rect.height)+")translate("+xOffset+","+yOffset+")scale("+(0.8/widthPerc)+")");
-            .attr("transform","rotate("+vis.calcWind(vis.data.wind.direction)+","+(rect.width)+","+(rect.height)+")");
-            
+            var icon = d3.selectAll(".weatherIcon")
+            .style("fill","#5c5aa8")
+            .attr("transform","translate("+xOffset+","+yOffset+")scale("+newScale+")");
+
+            icon.transition().duration(vis.aniDuration)
+                .attrTween("transform", rotTween);
+
+            function rotTween() {
+                var i = d3.interpolate(0, vis.calcWind(vis.data.wind.direction));
+//                var i = d3.interpolate(0, 360);
+                return function(t) {
+                    return "translate("+xOffset+","+yOffset+")scale("+newScale+")rotate(" + i(t) + ","+rect.width*0.8+","+rect.height+")";
+                };
+            }
+          
 //            .attr("transform","rotate("+vis.calcWind(vis.data.wind.direction)+","+xOffset+","+yOffset+")scale("+(0.8/widthPerc)+")");
 
 
@@ -85,12 +127,12 @@ WindVis.prototype.drawGraph = function(){
                 .data(end_val)
                 .enter()
                 .append("text")
-                .style("fill","#383838")
-                .style("font-size",vis.canvasHeight/3)
+                .style("fill","#5c5aa8")
+                .style("font-size",vis.canvasHeight/2)
                 .attr("class", "label")
-                .attr("text-anchor","end")
-                .attr("x",vis.canvasWidth*0.73)
-                .attr("y",vis.canvasHeight*0.60)
+                .attr("text-anchor","middle")
+                .attr("x",vis.canvasWidth*0.70)
+                .attr("y",vis.canvasHeight*0.50)
                 .text(0)
                 .transition()
                 .duration(vis.aniDuration)
@@ -110,9 +152,11 @@ WindVis.prototype.drawGraph = function(){
           
                 vis.canvas
                 .append("text")
-                .attr("x",vis.canvasWidth*0.75)
-                .attr("y",vis.canvasHeight*0.60)
-                 .style("font-size",vis.canvasHeight/5)
+                .attr("x",vis.canvasWidth*0.70)
+                .attr("y",vis.canvasHeight*0.85)
+                .style("fill","#5c5aa8")
+                .attr("text-anchor","middle")
+                 .style("font-size",vis.canvasHeight/3)
                 .text("km/h");
 
        });

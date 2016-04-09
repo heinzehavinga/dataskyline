@@ -19,15 +19,31 @@ SpreadsheetBarVis.prototype.constructor = SpreadsheetBarVis;
 
     // Replace the "sayHello" method
 SpreadsheetBarVis.prototype.drawGraph = function(){
+    var Vis = this;
    //TODO: custom keys!
     var data = this.data.leegstand.elements;
     data.forEach(function(d) {
        d.Leegstand = parseFloat(d.Leegstand)/100;
     });
     // Set the dimensions of the canvas / graph
-    var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    var margin = {top: 20, right: 20, bottom: 30, left: 80},
     width = this.canvasWidth - margin.left - margin.right,
     height = this.canvasHeight - margin.top - margin.bottom;
+    
+    
+    
+    var cList = [];
+    $.each(data,function(index,value){
+        cList.push(data[index]["Stad"]);
+    });
+    
+    var color = d3.scale.ordinal()
+                .domain(cList
+                .filter(function(key) { return key !== "date"; }))
+                .range(["#06bdea","#9bb717","#ed1e68","#ff912b","#5c4fd9"]);
+    
+    
+    
     
     var x = d3.scale.ordinal()
         .rangeRoundBands([0, width], .1);
@@ -50,8 +66,6 @@ SpreadsheetBarVis.prototype.drawGraph = function(){
       .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
- 
-
       x.domain(data.map(function(d) { return d.Stad; }));
       y.domain([0, d3.max(data, function(d) { return d.Leegstand; })]);
 
@@ -65,7 +79,7 @@ SpreadsheetBarVis.prototype.drawGraph = function(){
           .call(yAxis)
         .append("text")
           .attr("transform", "rotate(-90)")
-          .attr("y", 6)
+          .attr("y", -60)
           .attr("dy", ".71em")
           .style("text-anchor", "end")
           .text("Leegstand");
@@ -76,6 +90,12 @@ SpreadsheetBarVis.prototype.drawGraph = function(){
           .attr("class", "bar")
           .attr("x", function(d) { return x(d.Stad); })
           .attr("width", x.rangeBand())
+          .attr("y", function(d) { return height; })
+          .attr("height", 0)
+          .style("fill", function(d) { return color(d.Stad); })
+          .transition()
+          .duration(this.aniDuration)
+          .delay(function(d,i){return i*(Vis.aniDuration/10);})
           .attr("y", function(d) { return y(d.Leegstand); })
           .attr("height", function(d) { return height - y(d.Leegstand); });
    
@@ -94,9 +114,5 @@ SpreadsheetBarVis.prototype.drawGraph = function(){
 //CircleVis1.walk();       // "I am walking!"
 //CircleVis1.sayGoodBye(); // "Goodbye!"
 //
-//// Check that instanceof works correctly
-//console.log(CircleVis1 instanceof VisObject);  // true 
-//console.log(CircleVis1 instanceof CircleVis); // true
-//          
 
 

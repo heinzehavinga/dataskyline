@@ -30,10 +30,6 @@ var VisObject = function(svg, url) {
         this.getData();
     }
 
-    
-    this.test = function(){
-        console.log("test");
-    }
             
 };
 

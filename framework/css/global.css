@@ -1,4 +1,5 @@
 iframe{
     overflow:hidden;
     background: #fff;
+    border: 1px solid #fff;
 }

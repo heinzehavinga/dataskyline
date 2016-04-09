@@ -70,8 +70,6 @@ WeatherVis.prototype.constructor = WeatherVis;
 
 WeatherVis.prototype.getData = function(){
     
-    console.log("getData");
-    
     var vis = this;
     
     $.simpleWeather({
@@ -80,7 +78,6 @@ WeatherVis.prototype.getData = function(){
         unit: this.unit,
         success: function(weather) {
             vis.data = weather;
-            console.log(vis.data);
             vis.drawGraph();
         },
         error: function(error) {

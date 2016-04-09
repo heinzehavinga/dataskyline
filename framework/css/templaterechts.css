@@ -1,7 +1,8 @@
 /* --- General grid setup ---  */
 
 body {
-	background: #000;
+	background: #fff;
+  cursor: none;
 }
 
 *, *:after, *:before {
@@ -22,7 +23,7 @@ body {
 }
 
 .grid {
-  margin-top: 41px;
+  margin-top: 47px;
   margin-left: 50px;
   overflow: hidden;
 }
@@ -45,48 +46,48 @@ body {
 
 /* First column */
 .col-1 {
-  width: 870px;
-  margin-right: 375px;  /* Gutter width */
+  width: 438px;
+   margin-right: 298px;  /* Gutter width */
 }
 .col-1 div {
-	background: #333;
-	height: 437px;
-	margin-bottom: 109px;
+	border-radius: 50%;
+  background: #333;
+  height: 438px;
+  margin-bottom: 110px;
 }
 
 /* Second column */
 .col-2 {
-  width: 436px;
-  margin-right: 298px;  /* Gutter width */
+  width: 1026px;
+  margin-right: 299px;  /* Gutter width */
 }
 .col-2 div {
-  border-radius: 50%;
-	background: #555;
-	height: 437px;
-	margin-bottom: 109px;
+  background: #333;
+  height: 438px;
+  margin-bottom: 110px;
 }
 
 /* Third column */
 .col-3 {
-  width: 1026px;
-  margin-right: 297px;  /* Gutter width */
+  width: 438px;
+  margin-right: 375px;  /* Gutter width */
 }
 .col-3 div {
-  background: #333;
-  height: 437px;
+  border-radius: 50%;
+  background: #555;
+  height: 438px;
   margin-bottom: 109px;
 }
 
 /* Fourth column */
 .col-4 {
-  width: 438px;
+  width: 870px;
   margin-right: 0;  /* Gutter width */
 }
 .col-4 div {
-  border-radius: 50%;
   background: #333;
-  height: 437px;
-  margin-bottom: 109px;
+  height: 438px;
+  margin-bottom: 110px;
 }
 
 [class*='col-'] div:last-of-type {

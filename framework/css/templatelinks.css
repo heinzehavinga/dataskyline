@@ -1,7 +1,8 @@
 /* --- General grid setup ---  */
 
 body {
-	background: #000;
+	background: #fff;
+  cursor: none;
 }
 
 *, *:after, *:before {
@@ -22,8 +23,8 @@ body {
 }
 
 .grid {
-  margin-top: 37px;
-  margin-left: 39px;
+  margin-top: 60px;
+  margin-left: 37px;
   overflow: hidden;
 }
 
@@ -49,7 +50,7 @@ body {
   margin-right: 179px;  /* Gutter width */
 }
 .col-1 div {
-	background: #333;
+	background: #fff;
 	height: 571px;
 	margin-bottom: 153px;
 }
@@ -64,7 +65,7 @@ body {
   margin-right: 148px;  /* Gutter width */
 }
 .col-2 div {
-	background: #555;
+	background: #fff;
 	height: 819px;
 	margin-bottom: 153px;
 }
@@ -75,7 +76,7 @@ body {
   margin-right: 0;  /* Gutter width */
 }
 .col-3 div {
-	background: #444;
+	background: #fff;
 	height: 333px;
 	margin-bottom: 153px;
 }

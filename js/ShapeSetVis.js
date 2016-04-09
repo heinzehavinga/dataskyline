@@ -23,7 +23,7 @@ ShapeSetVis.prototype.constructor = ShapeSetVis;
 
 // Replace the "sayHello" method
 ShapeSetVis.prototype.drawGraph = function(){
-  console.log("drawGraph new!");
+  
     //Draw + Update 
     
     var rSize;
@@ -75,7 +75,7 @@ ShapeSetVis.prototype.drawGraph = function(){
 
 // Add a "sayGoodBye" method
 ShapeSetVis.prototype.sayGoodBye = function(){
-  console.log("Goodbye!");
+  
 };
 
 //// Example usage:
@@ -85,8 +85,7 @@ ShapeSetVis.prototype.sayGoodBye = function(){
 //ShapeSetVis1.sayGoodBye(); // "Goodbye!"
 //
 //// Check that instanceof works correctly
-//console.log(ShapeSetVis1 instanceof VisObject);  // true 
-//console.log(ShapeSetVis1 instanceof ShapeSetVis); // true
+
 //          
 
 

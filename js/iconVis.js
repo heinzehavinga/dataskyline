@@ -5,7 +5,7 @@ function IconVis(svg, url, label) {
   // that "this" is set correctly during the call
   VisObject.call(this, svg, url);
   this.label = label;
-    console.log(this.label);
+    
 }
 
 // Create a IconVis.prototype object that inherits from VisObject.prototype.
@@ -23,7 +23,7 @@ IconVis.prototype.constructor = IconVis;
 IconVis.prototype.drawGraph = function(){
     
     var vis = this
-    console.log(this.canvas);
+    
     d3.xml("../icons/car.svg", "image/svg+xml", function(error, xml) {
         if (error) throw error;
         
@@ -46,18 +46,18 @@ IconVis.prototype.drawGraph = function(){
 
         //Scaling to whole thing
         var rect = d3.select(".iconFill").node().getBBox();
-        console.log(rect);
+    
         var widthPerc = rect.width/vis.canvasWidth;
         var heightPerc = rect.height/vis.canvasHeight;
-        
-        var newScale = (0.8/widthPerc)
+        var hscale  = 1*vis.canvasWidth  / rect.width;
+        var vscale  = 1*vis.canvasHeight / rect.height;
+        var newScale   = (hscale < vscale) ? hscale : vscale;
+        newScale = newScale*0.8;
         
         d3.selectAll(".iconObject").attr("transform","scale("+newScale+")");
-        
-        var xOffset = (vis.canvasWidth-(rect.width*newScale))/2;
-        
-        var yOffset = (vis.canvasHeight-(rect.height*newScale))-(vis.canvasHeight/20);
-        d3.selectAll(".iconObject").attr("transform","translate("+xOffset+","+yOffset+")scale("+(0.8/widthPerc)+")");
+        var xOffset  = vis.canvasWidth *0.1;
+        var yOffset = (vis.canvasHeight*0.2);
+        d3.selectAll(".iconObject").attr("transform","translate("+xOffset+","+yOffset+")scale("+newScale+")");
         
         
         
@@ -80,17 +80,56 @@ IconVis.prototype.drawGraph = function(){
         //applying the mask
         d3.select(".iconFill").attr("clip-path","url(#mask)")
         
-        console.log(this.label);
+        var end_val = [vis.maxValue-vis.data];
+        console.log(vis.data);
+        
+         canvas
+         .selectAll(".whitelabel")
+        .data(end_val)
+        .enter()
+        .append("text")
+        .style("font-size",vis.canvasHeight/4)
+        .attr("class", "whitelabel")
+        .attr("text-anchor","middle")
+        .attr("x",vis.canvasWidth*0.49)
+        .attr("y",vis.canvasHeight*0.55)
+         .text(0)
+        .transition()
+        .duration(vis.aniDuration)
+        .tween("text", function(d) {
+             
+            //Got the tween function from http://jsfiddle.net/c5YVX/8/
+                var i = d3.interpolate(this.textContent, d),
+                    prec = (d + "").split("."),
+                    round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
+
+                return function(t) {
+                    this.textContent = Math.round(i(t) * round) / round;
+                };
+            });
+        
         canvas
         .append("text")
         .attr("class",".label")
-        .style("font-size",vis.canvasHeight/5)
+        .style("font-size",vis.canvasHeight/8)
         .attr("class", "label")
         .attr("text-anchor","middle")
         .attr("x",vis.canvasWidth/2)
-        .attr("y",vis.canvasHeight*0.25)
+        .attr("y",vis.canvasHeight*0.15)
         //Hier moet dus een parameter voor komen.
         .text(vis.label);
+        
+        canvas
+        .append("text")
+        .attr("class",".label")
+        .style("font-size",vis.canvasHeight/8)
+        .attr("class", "label")
+        .attr("text-anchor","middle")
+        .attr("x",vis.canvasWidth/2)
+        .attr("y",vis.canvasHeight*0.90)
+        //Hier moet dus een parameter voor komen.
+        .text("Garage");
+        
         
     });
     
@@ -107,8 +146,6 @@ IconVis.prototype.drawGraph = function(){
 //IconVis1.sayGoodBye(); // "Goodbye!"
 //
 //// Check that instanceof works correctly
-//console.log(IconVis1 instanceof VisObject);  // true 
-//console.log(IconVis1 instanceof IconVis); // true
 //          
 
 

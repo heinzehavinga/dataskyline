@@ -21,12 +21,13 @@ SpreadsheetLineVis.prototype.constructor = SpreadsheetLineVis;
 SpreadsheetLineVis.prototype.drawGraph = function(){
    
     var data = this.data.weekbezoekers.elements;
+    
     // Set the dimensions of the canvas / graph
     var margin = {top: 20, right: 200, bottom: 30, left: 50},
     width = this.canvasWidth - margin.left - margin.right,
     height = this.canvasHeight - margin.top - margin.bottom;
 
-    var parseDate = d3.time.format("%d-%m-%Y").parse;
+    var parseDate = d3.time.format("%Y").parse;
 
     var x = d3.time.scale()
         .range([0, width]);
@@ -60,17 +61,17 @@ SpreadsheetLineVis.prototype.drawGraph = function(){
 
     var keys = d3.keys(data[0])
       data.forEach(function(d) {
-        console.log(d.date,parseDate(d.date));
           d.date = parseDate(d.date);
     
         for(var i =0;i<keys.length;i++){
             if(keys[i]!=="date"){
-                d[keys[i]]  = parseFloat(d[keys[i]]); 
+                d[keys[i]]  = parseFloat(d[keys[i]].replace(".",",")); 
             }
         }
           
       });
         
+    
       var cities = color.domain().map(function(name) {
         return {
           name: name,
@@ -109,7 +110,7 @@ SpreadsheetLineVis.prototype.drawGraph = function(){
 
       city.append("path")
           .attr("class", "dataline")
-          .attr("d", function(d) { console.log(d.values); console.log(line(d.values)); return line(d.values); })
+          .attr("d", function(d) { return line(d.values); })
           .style("stroke", function(d) { return color(d.name); });
 
       city.append("text")
@@ -119,20 +120,7 @@ SpreadsheetLineVis.prototype.drawGraph = function(){
           .attr("x", 3)
           .attr("dy", ".35em")
           .text(function(d) { return d.name; });
-    //});
+    
 };
-
-
-
-//// Example usage:
-//var CircleVis1 = new CircleVis("Janet", "Applied Physics");
-//CircleVis1.sayHello();   // "Hello, I'm Janet. I'm studying Applied Physics."
-//CircleVis1.walk();       // "I am walking!"
-//CircleVis1.sayGoodBye(); // "Goodbye!"
-//
-//// Check that instanceof works correctly
-//console.log(CircleVis1 instanceof VisObject);  // true 
-//console.log(CircleVis1 instanceof CircleVis); // true
-//          
 
 
