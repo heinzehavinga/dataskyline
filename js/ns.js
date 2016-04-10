@@ -19,12 +19,15 @@ NSVis.prototype.constructor = NSVis;
 
 
 NSVis.prototype.getData = function(){
-        var ourSelf = this;
-    
+        
+    var ourSelf = this;
         this.xhr.get(function(err, response) {
 
             ourSelf.data = response;
-            console.log(ourSelf.data);
+            for(var i=0;i<ourSelf.data.length;i++){
+               ourSelf.data[i].vertrekTijd = new Date(ourSelf.data[i].vertrekTijd*1000); 
+            }
+            
 
             if(this.update){
                 ourSelf.updateGraph();
@@ -44,71 +47,76 @@ NSVis.prototype.getData = function(){
 NSVis.prototype.drawGraph = function(){
   
     //Draw + Update 
+    var ourSelf = this;
+//    ourSelf.data[2].vertrekVertraging = "5"
+
     
-    var rSize;
-    if(this.canvasHeight>this.canvasWidth){
-        rSize = this.canvasWidth/2;
-    }else{
-        rSize = this.canvasHeight/2;
-    }
-    
-    
-    var endValue = this.canvasHeight-(this.canvasHeight*(this.data/this.maxValue));
-    
-    var group = this.canvas.append("g");
-    
-    group
-    .append("defs")
-    .append("clipPath")
-    //Id moet gekoppeld worden op de objecten die je wil masken
-    .attr("id","mask")
-    .append("rect")
-    .attr("x",0)
-    .attr("y",this.canvasHeight)
-    .attr("height",this.canvasHeight)
-    .attr("width",this.canvasWidth)
-    .transition()
-    .duration(this.aniDuration)
-    .attr("y",endValue);
-//    .attr("height",400);
-    
-    
-    group
-    .append("circle")
-    .attr("cx",this.canvasWidth/2)
-    .attr("cy",this.canvasHeight/2)
-    .attr("r",rSize)
-    .style("fill","#06bdea")
-    //Link
-    .attr("clip-path","url(#mask)")
-    
-    
-    var end_val = [this.data];
-    
-    group
-    .selectAll(".label")
-    .data(end_val)
+    this.canvas
+    .selectAll(".labelstation")
+    .data(ourSelf.data)
     .enter()
     .append("text")
-    .style("fill","#383838")
-    .style("font-size",this.canvasHeight/3)
+    .style("fill",function(d){ 
+        var color = "#383838";
+        if(d.vertrekVertraging != null){
+            color = "#f79131";
+        }
+        return color;
+    
+    })
+    .style("font-size",this.canvasHeight/12)
     .attr("class", "label")
-    .attr("text-anchor","middle")
-    .attr("x",this.canvasWidth/2)
-    .attr("y",this.canvasHeight*0.60)
-    .text(0)
-    .transition()
-    .duration(this.aniDuration)
-    .tween("text", function(d) {
-        //Got the tween function from http://jsfiddle.net/c5YVX/8/
-            var i = d3.interpolate(this.textContent, d),
-                prec = (d + "").split("."),
-                round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
-
-            return function(t) {
-                this.textContent = Math.round(i(t) * round) / round;
-            };
-        });
+    .attr("text-anchor","left")
+    .attr("x",this.canvasWidth*0.1)
+    .attr("y",function(d,i){ return ((i+1)*(ourSelf.canvasHeight*0.19));})
+    .text(function(d){ return d.eindBestemming});
+    
+    
+    this.canvas
+    .selectAll(".labeltime")
+    .data(ourSelf.data)
+    .enter()
+    .append("text")
+    .style("fill", function(d){ 
+        var color = "#383838";
+        if(d.vertrekVertraging != null){
+            color = "#f79131";
+        }
+        return color;
+    
+    })
+    .style("font-size",this.canvasHeight/12)
+    .attr("class", "label")
+    .attr("text-anchor","left")
+    .attr("x",this.canvasWidth*0.7)
+    .attr("y",function(d,i){ return ((i+1)*(ourSelf.canvasHeight*0.19));})
+    .text(function(d){ return pad(d.vertrekTijd.getHours(),2)+":"+pad(d.vertrekTijd.getMinutes(),2)});
+    
+    this.canvas
+    .selectAll(".labeldelay")
+    .data(ourSelf.data)
+    .enter()
+    .append("text")
+    .style("fill", function(d){ 
+        var color = "#383838";
+        if(d.vertrekVertraging != null){
+            color = "#f79131";
+        }
+        return color;
+    
+    })
+    .style("font-size",this.canvasHeight/14)
+    .attr("class", "label")
+    .attr("text-anchor","left")
+    .attr("x",this.canvasWidth*0.89)
+    .attr("y",function(d,i){ return ((i+1)*(ourSelf.canvasHeight*0.19));})
+    .text(function(d){ if(d.vertrekVertraging == null){return "";}return "+"+d.vertrekVertraging});
+    
+    function pad(n, width, z) {
+  z = z || '0';
+  n = n + '';
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
 };
 
 // Add a "sayGoodBye" method

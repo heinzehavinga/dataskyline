@@ -128,7 +128,7 @@ IconVis.prototype.drawGraph = function(){
         .attr("x",vis.canvasWidth/2)
         .attr("y",vis.canvasHeight*0.90)
         //Hier moet dus een parameter voor komen.
-        .text("Garage");
+        .text("Parkeergarage");
         
         
     });

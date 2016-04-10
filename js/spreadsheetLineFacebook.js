@@ -20,21 +20,27 @@ SpreadsheetLineVis.prototype.constructor = SpreadsheetLineVis;
     // Replace the "sayHello" method
 SpreadsheetLineVis.prototype.drawGraph = function(){
    
-    var data = this.data.weekbezoekers.elements;
+    var data = this.data.pagelikes.elements;
     
     // Set the dimensions of the canvas / graph
-    var margin = {top: 20, right: 200, bottom: 30, left: 50},
+    var margin = {top: 20, right: 200, bottom: 30, left: 80},
     width = this.canvasWidth - margin.left - margin.right,
     height = this.canvasHeight - margin.top - margin.bottom;
 
-    var parseDate = d3.time.format("%Y").parse;
+    var parseDate = d3.time.format("%d-%m-%Y").parse;
 
     var x = d3.time.scale()
         .range([0, width]);
 
     var y = d3.scale.linear()
         .range([height, 0]);
-
+    
+    
+    var index = Math.floor(Math.random()*d3.keys(data[0]).length);
+    if(index ==0 ){ index = 1};
+    var active = d3.keys(data[0])[index];
+    console.log(active);
+    
     var color = d3.scale.ordinal()
                 .domain(d3.keys(data[0])
                 .filter(function(key) { return key !== "date"; }))
@@ -52,8 +58,7 @@ SpreadsheetLineVis.prototype.drawGraph = function(){
         .interpolate("basis")
         .x(function(d) { return x(d.date); })
         .y(function(d) { return y(d.temperature); });
-    
-    
+
     var svg = this.canvas
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -81,15 +86,21 @@ SpreadsheetLineVis.prototype.drawGraph = function(){
           })
         };
       });
-
-      x.domain(d3.extent(data, function(d) { return d.date; }));
+    var newCities = [];
+        
+    for(var i=0;i<cities.length;i++){
+        if(cities[i].name == active){
+            newCities.push(cities[i]);
+        }
+    }
+    cities =newCities;
+    x.domain(d3.extent(data, function(d) { return d.date; }));
 
       y.domain([
         d3.min(cities, function(c) { return d3.min(c.values, function(v) { return v.temperature; }); }),
         d3.max(cities, function(c) { return d3.max(c.values, function(v) { return v.temperature; }); })
       ]);
 
-        
       svg.append("g")
           .attr("class", "x axis")
           .attr("transform", "translate(0," + height + ")")
@@ -103,7 +114,7 @@ SpreadsheetLineVis.prototype.drawGraph = function(){
           .attr("y", 6)
           .attr("dy", ".71em")
           .style("text-anchor", "end")
-          .text("Index weekbezoekers");
+          .text("Pagelikes");
 
       var city = svg.selectAll(".city")
           .data(cities)
