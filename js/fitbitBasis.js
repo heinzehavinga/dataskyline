@@ -27,7 +27,10 @@ FitbitBaseVis.prototype.getData = function(){
              if(data[0] !== undefined){
                 
                     visObject.data = data[0]['activities-heart-intraday'].dataset;
-             
+                    if(visObject.data.length == 0){
+                        visObject.data = [{"time":"21:06:00","value":66},{"time":"21:06:10","value":64},{"time":"21:06:20","value":66},{"time":"21:06:30","value":68},{"time":"21:06:40","value":69},{"time":"21:06:50","value":69},{"time":"21:07:05","value":69},{"time":"21:07:10","value":68},{"time":"21:07:25","value":68},{"time":"21:07:30","value":67},{"time":"21:07:40","value":65},{"time":"21:07:45","value":63},{"time":"21:08:00","value":61},{"time":"21:08:15","value":61},{"time":"21:08:20","value":59},{"time":"21:08:30","value":59},{"time":"21:08:45","value":60},{"time":"21:08:50","value":61},{"time":"21:08:55","value":59},{"time":"21:09:00","value":58},{"time":"21:09:15","value":63},{"time":"21:09:20","value":63},{"time":"21:09:25","value":66},{"time":"21:09:30","value":66},{"time":"21:09:40","value":67}];    
+                    }
+                 
                 }else{
                  
                     visObject.data = [{"time":"21:06:00","value":66},{"time":"21:06:10","value":64},{"time":"21:06:20","value":66},{"time":"21:06:30","value":68},{"time":"21:06:40","value":69},{"time":"21:06:50","value":69},{"time":"21:07:05","value":69},{"time":"21:07:10","value":68},{"time":"21:07:25","value":68},{"time":"21:07:30","value":67},{"time":"21:07:40","value":65},{"time":"21:07:45","value":63},{"time":"21:08:00","value":61},{"time":"21:08:15","value":61},{"time":"21:08:20","value":59},{"time":"21:08:30","value":59},{"time":"21:08:45","value":60},{"time":"21:08:50","value":61},{"time":"21:08:55","value":59},{"time":"21:09:00","value":58},{"time":"21:09:15","value":63},{"time":"21:09:20","value":63},{"time":"21:09:25","value":66},{"time":"21:09:30","value":66},{"time":"21:09:40","value":67}];
