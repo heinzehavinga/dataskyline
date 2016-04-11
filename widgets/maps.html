@@ -5,10 +5,20 @@
     <title>Circle</title>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="../css/style.css">
-      
+      <style>
+          html,body{
+          cursor:none;
+              }
+          .img{
+              margin: 0 auto;
+              width: 582px;
+              height: 272;
+              padding-top:15%;
+          }
+      </style>
   </head>
   <body>
-    <div id="iframeOverlay"></div> 
+    <div id="iframeOverlay"><div class="img"><img src="../img/logo.jpg"></div></div> 
     <iframe id="mapiframe" height="99%" width="99%" src="http://tracker.geops.ch/?z=14&s=1&x=768659.2851&y=6839974.7819&l=here"></iframe>
      
     <script src="../libs/d3.min.js"></script>
@@ -16,6 +26,8 @@
     <script src="../js/vis.js"></script>
     <script src="../js/circleVis.js"></script>
     <script src="../js/iconVis.js"></script>
+    <script type="text/javascript" src="../framework/js/getIP.js"></script>
+<script type="text/javascript" src="../framework/js/client.js"></script>
     <script>
 
         var listURL = [
